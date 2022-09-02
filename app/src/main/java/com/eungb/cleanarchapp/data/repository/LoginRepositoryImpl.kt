@@ -1,12 +1,11 @@
-package com.eungb.cleanarchapp.data.common.login.repository
+package com.eungb.cleanarchapp.data.repository
 
-import com.eungb.cleanarchapp.data.common.login.remote.api.LoginApi
-import com.eungb.cleanarchapp.data.common.login.remote.dto.LoginRequest
-import com.eungb.cleanarchapp.data.common.login.remote.dto.LoginResponse
-import com.eungb.cleanarchapp.data.common.utils.WrappedListResponse
-import com.eungb.cleanarchapp.data.common.utils.WrappedResponse
-import com.eungb.cleanarchapp.domain.login.LoginRepository
-import com.eungb.cleanarchapp.domain.login.entity.LoginEntity
+import com.eungb.cleanarchapp.data.remote.api.LoginApi
+import com.eungb.cleanarchapp.data.remote.dto.LoginRequest
+import com.eungb.cleanarchapp.data.remote.dto.LoginResponse
+import com.eungb.cleanarchapp.data.utils.WrappedResponse
+import com.eungb.cleanarchapp.domain.repository.LoginRepository
+import com.eungb.cleanarchapp.domain.entity.LoginEntity
 import com.eungb.cleanarchapp.presentation.common.base.BaseResult
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken

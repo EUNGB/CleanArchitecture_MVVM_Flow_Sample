@@ -1,4 +1,4 @@
-package com.eungb.cleanarchapp.data.common.module
+package com.eungb.cleanarchapp.di
 
 import android.content.Context
 import com.eungb.cleanarchapp.infra.utils.SharedPrefs

@@ -1,4 +1,4 @@
-package com.eungb.cleanarchapp.data.common.utils
+package com.eungb.cleanarchapp.data.utils
 
 import com.eungb.cleanarchapp.infra.utils.SharedPrefs
 import okhttp3.Interceptor

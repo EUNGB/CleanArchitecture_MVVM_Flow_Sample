@@ -1,4 +1,4 @@
-package com.eungb.cleanarchapp.data.common.utils
+package com.eungb.cleanarchapp.data.utils
 
 import com.google.gson.annotations.SerializedName
 

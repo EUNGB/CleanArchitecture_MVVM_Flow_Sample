@@ -4,26 +4,25 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.constraintlayout.motion.widget.TransitionBuilder.validate
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.eungb.cleanarchapp.R
-import com.eungb.cleanarchapp.data.common.login.remote.dto.LoginRequest
-import com.eungb.cleanarchapp.data.common.login.remote.dto.LoginResponse
-import com.eungb.cleanarchapp.data.common.utils.WrappedResponse
+import com.eungb.cleanarchapp.data.remote.dto.LoginRequest
+import com.eungb.cleanarchapp.data.remote.dto.LoginResponse
+import com.eungb.cleanarchapp.data.utils.WrappedResponse
 import com.eungb.cleanarchapp.databinding.ActivityLoginBinding
-import com.eungb.cleanarchapp.domain.login.entity.LoginEntity
+import com.eungb.cleanarchapp.domain.entity.LoginEntity
 import com.eungb.cleanarchapp.infra.utils.SharedPrefs
 import com.eungb.cleanarchapp.presentation.common.extension.isEmail
 import com.eungb.cleanarchapp.presentation.common.extension.showGenericAlertDialog
 import com.eungb.cleanarchapp.presentation.common.extension.showToast
 import com.eungb.cleanarchapp.presentation.main.MainActivity
+import com.eungb.cleanarchapp.presentation.signup.SignUpActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
-import kotlin.math.log
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
@@ -38,9 +37,15 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        initControl()
         login()
         observe()
+    }
+
+    private fun initControl() {
+        binding.registerButton.setOnClickListener {
+            startActivity(Intent(this, SignUpActivity::class.java))
+        }
     }
 
     private fun observe() {

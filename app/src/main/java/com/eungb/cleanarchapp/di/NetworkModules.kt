@@ -1,18 +1,16 @@
-package com.eungb.cleanarchapp.data.common.module
+package com.eungb.cleanarchapp.di
 
 import com.eungb.cleanarchapp.BuildConfig
-import com.eungb.cleanarchapp.data.common.utils.RequestInterceptor
+import com.eungb.cleanarchapp.data.utils.RequestInterceptor
 import com.eungb.cleanarchapp.infra.utils.SharedPrefs
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -25,6 +23,7 @@ object NetworkModules {
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder().apply {
             addConverterFactory(GsonConverterFactory.create())
+//            addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             client(okHttpClient)
             baseUrl(BuildConfig.API_BASE_URL)
         }.build()

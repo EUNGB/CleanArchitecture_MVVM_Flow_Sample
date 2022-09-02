@@ -28,10 +28,9 @@
         <activity
             android:name=".presentation.main.MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.CleanArchApp.NoActionBar">
-
-        </activity>
+            android:theme="@style/Theme.CleanArchApp.NoActionBar" />
+        <activity android:name=".presentation.signup.SignUpActivity"
+            android:exported="true"/>
     </application>
 
 </manifest>

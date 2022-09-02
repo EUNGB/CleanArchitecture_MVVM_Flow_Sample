@@ -1,4 +1,4 @@
-package com.eungb.cleanarchapp.domain.login.entity
+package com.eungb.cleanarchapp.domain.entity
 
 data class LoginEntity(
     var id: Int,
