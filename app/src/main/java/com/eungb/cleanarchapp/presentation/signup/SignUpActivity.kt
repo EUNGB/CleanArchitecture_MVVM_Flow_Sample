@@ -33,13 +33,14 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.vm = viewModel
 
         initObserver()
         initControl()
     }
 
     private fun initControl() = with(binding) {
-        backButton.setOnClickListener { moveBack() }
+        backButton.setOnClickListener { viewModel.route.toBack() }
         registerButton.setOnClickListener { signUp() }
     }
 
@@ -47,22 +48,39 @@ class SignUpActivity : AppCompatActivity() {
         viewModel.state.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
             .onEach { handleState(it) }
             .launchIn(lifecycleScope)
+
+        viewModel.event.flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+            .onEach { handleEvent(it) }
+            .launchIn(lifecycleScope)
+
+        viewModel.nameLiveData.observe(this) { checkSignUpButton() }
+        viewModel.emailLiveData.observe(this) { checkSignUpButton() }
+        viewModel.passwordLiveData.observe(this) { checkSignUpButton() }
     }
 
-    private fun signUp() {
-        val name = binding.nameEditText.text.toString().trim()
-        val email = binding.emailEditText.text.toString().trim()
-        val password = binding.passwordEditText.text.toString().trim()
+    private fun checkSignUpButton() {
+        clearErrorMessage()
+        binding.registerButton.isEnabled = with(viewModel) {
+            name.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()
+        }
+    }
 
-        if (validateSignUp(name, email, password)) {
-            viewModel.signUp(SignUpRequest(name, email, password))
+    private fun signUp() = with(viewModel) {
+        if (validateSignUp(name.trim(), email.trim(), password.trim())) {
+            input.clickSignUp(
+                SignUpRequest(
+                    name.trim(),
+                    email.trim(),
+                    password.trim()
+                )
+            )
         }
     }
 
     private fun validateSignUp(name: String, email: String, password: String): Boolean {
         clearErrorMessage()
         return when {
-            name.isEmpty() -> {
+            name.length < 3 -> {
                 setNameError(getString(R.string.error_name_not_valid))
                 false
             }
@@ -118,10 +136,19 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun handleSuccessSignUp(loginEntity: LoginEntity) {
         Log.d("Success SignUp", "userToken: ${loginEntity.token} ")
+        this.showToast("가입 성공")
+        viewModel.route.toSignIn()
         moveLogin()
     }
 
     private fun handleErrorSignUp(error: WrappedResponse<SignUpResponse>) = this.showGenericAlertDialog(error.message)
+
+    private fun handleEvent(event: SignUpEvent) {
+        when (event) {
+            is SignUpEvent.MoveBack -> moveBack()
+            is SignUpEvent.MoveSignIn -> moveLogin()
+        }
+    }
 
     private fun moveLogin() {
         startActivity(Intent(this, LoginActivity::class.java).apply {
