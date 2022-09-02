@@ -10,7 +10,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.eungb.cleanarchapp.R
 import com.eungb.cleanarchapp.databinding.FragmentHomeBinding
 import com.eungb.cleanarchapp.domain.entity.ProductEntity
 import com.eungb.cleanarchapp.presentation.common.extension.showGenericAlertDialog
@@ -41,13 +43,16 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initObserve()
         initUi()
         initAdapter()
-        initObserve()
     }
 
     private fun initUi() {
         viewModel.input.onUpdateProducts()
+        binding.fab.setOnClickListener {
+            findNavController().navigate(R.id.action_FirstFragment_to_mainAddFragment)
+        }
     }
 
     private fun initAdapter() {
