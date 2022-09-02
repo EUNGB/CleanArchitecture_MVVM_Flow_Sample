@@ -51,7 +51,7 @@ class HomeFragment : Fragment() {
     private fun initUi() {
         viewModel.input.onUpdateProducts()
         binding.fab.setOnClickListener {
-            findNavController().navigate(R.id.action_FirstFragment_to_mainAddFragment)
+           viewModel.route.toAdd()
         }
     }
 
@@ -76,7 +76,7 @@ class HomeFragment : Fragment() {
     private fun handleEvent(event: ProductEvent) {
         when (event) {
             is ProductEvent.MoveAdd -> {
-
+                findNavController().navigate(R.id.action_FirstFragment_to_mainAddFragment)
             }
             is ProductEvent.UpdateProduct -> {
 
