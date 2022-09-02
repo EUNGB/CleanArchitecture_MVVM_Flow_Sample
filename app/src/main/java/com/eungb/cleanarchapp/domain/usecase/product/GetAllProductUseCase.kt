@@ -1,0 +1,19 @@
+package com.eungb.cleanarchapp.domain.usecase.product
+
+import com.eungb.cleanarchapp.data.remote.dto.ProductResponse
+import com.eungb.cleanarchapp.data.utils.WrappedListResponse
+import com.eungb.cleanarchapp.domain.entity.ProductEntity
+import com.eungb.cleanarchapp.domain.repository.ProductRepository
+import com.eungb.cleanarchapp.presentation.common.base.BaseResult
+import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
+
+class GetAllProductUseCase @Inject constructor(
+    private val repository: ProductRepository
+) {
+
+    suspend fun invoke(): Flow<BaseResult<List<ProductEntity>, WrappedListResponse<ProductResponse>>> {
+        return repository.getAllProducts()
+    }
+
+}
